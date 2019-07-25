@@ -21,8 +21,6 @@ module.exports = {
         model: 'items',
         key: 'id',
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
     order_id: {
       allowNull: false,
@@ -31,8 +29,6 @@ module.exports = {
         model: 'orders',
         key: 'id',
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
   }),
 
