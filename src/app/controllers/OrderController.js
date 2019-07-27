@@ -10,7 +10,7 @@ class OrderController {
     try {
       transaction = await sequelize.transaction();
       const { items } = req.body;
-      if (!items) res.send('Não há itens');
+      if (!items) return res.send('Não há itens');
       const order = await Order.create({ userId: req.userId }, { transaction });
       for (let i = 0; i < items.length; i++) {
         const itemDb = await Item.findByPk(items[i].id, { raw: true });
@@ -61,13 +61,9 @@ class OrderController {
 
   async update(req, res) {
     const { id } = req.params;
-
     const modelData = await Order.findByPk(id);
-
     if (!modelData) return res.status(400).send('Registro não encontrado');
-
     await modelData.update(req.body);
-
     return res.send(modelData.get());
   }
 
