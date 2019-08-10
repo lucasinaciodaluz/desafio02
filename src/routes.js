@@ -1,6 +1,7 @@
 const express = require('express');
 const handle = require('express-async-handler');
 const validate = require('express-validation');
+
 const authMiddleware = require('./app/middlewares/auth');
 const AuthController = require('./app/controllers/AuthController');
 const UserController = require('./app/controllers/UserController');
@@ -16,13 +17,13 @@ routes.get('/', (req, res) => {
   res.send('Server is up!');
 });
 
+routes.post('/users', validate(UserValidator), handle(UserController.create));
 routes.post('/authenticate', AuthController.auth);
 
 routes.use(authMiddleware);
 
 routes.get('/users', handle(UserController.list));
 routes.get('/users/:id', handle(UserController.get));
-routes.post('/users', validate(UserValidator), handle(UserController.create));
 routes.put('/users/:id', validate(UserValidator), handle(UserController.update));
 routes.delete('/users/:id', handle(UserController.destroy));
 
